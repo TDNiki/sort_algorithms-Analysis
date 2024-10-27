@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <algorithm>
+#include <random>
 #include "algorithm_S.h"
 
 
@@ -14,27 +15,29 @@ void printVector(std::vector<long> & vec)
 
 int main(void)
 {
-    long n0 = 10;
-    long nMax = 30;
-    int nTest = 1;
+    long n0 = 10e3;
+    long nMax = 10e6;
+    int nTest = 7;
 
 	for (long sizeVec = n0; sizeVec < nMax; sizeVec *= 2) {
 		std::vector<long> vec(sizeVec, 0);
+		std::random_device rd;
+		std::mt19937 gen(rd());
+
 		for (long i = 0; i < sizeVec; i++) {
 			vec[i] = i;
 		}
 		
 		auto start = std::chrono::high_resolution_clock::now();
+		
 		for (int iTest = 0; iTest < nTest; iTest++) {
+			std::shuffle(vec.begin(), vec.end(), gen);
+			bubbleSort(vec);
 
-			std::random_shuffle(vec.begin(), vec.end());
-			printVector(vec);
-			quickSort(vec, 0, vec.size() - 1);
-			printVector(vec);
 		}
 		auto end = std::chrono::high_resolution_clock::now();
 		auto dur = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-		//std::cout << dur.count() / nTest << std::endl;
+		std::cout << dur.count() / nTest << std::endl;
 		vec.clear();
 	}
 
