@@ -1,5 +1,14 @@
 #include <vector>
 
+void count_sort(std::vector<long> &vec, long min_v, long max_v)
+{
+	std::vector<long> count(max_v - min_v + 1, 0);
+	for (long val : vec) count[val - min_v]++;
+
+	vec.clear();
+	for (long i = 0; i < count.size(); i++) for (long j = 0; j < count[i]; j++) vec.push_back(i + min_v);
+}
+
 void bubbleSort(std::vector<long> & vec)
 {
 	long numberPairs = vec.size();
