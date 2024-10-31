@@ -15,8 +15,8 @@ void printVector(std::vector<long> & vec)
 
 int main(void)
 {
-    long n0 = 10e3;
-    long nMax = 10e6;
+    long n0 = 10e3; //10e3
+    long nMax = 10e7; //10e6
     int nTest = 7;
 
 	for (long sizeVec = n0; sizeVec < nMax; sizeVec *= 2) {
@@ -32,9 +32,9 @@ int main(void)
 		
 		for (int iTest = 0; iTest < nTest; iTest++) {
 			std::shuffle(vec.begin(), vec.end(), gen);
-			bubbleSort(vec);
-
+			quickSort(vec, 0, vec.size() - 1);
 		}
+
 		auto end = std::chrono::high_resolution_clock::now();
 		auto dur = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 		std::cout << dur.count() / nTest << std::endl;
