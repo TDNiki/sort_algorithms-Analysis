@@ -32,7 +32,9 @@ int main(void)
 		
 		for (int iTest = 0; iTest < nTest; iTest++) {
 			std::shuffle(vec.begin(), vec.end(), gen);
-			quickSort(vec, 0, vec.size() - 1);
+
+			count_sort(vec, 0, sizeVec -1);
+
 		}
 
 		auto end = std::chrono::high_resolution_clock::now();
