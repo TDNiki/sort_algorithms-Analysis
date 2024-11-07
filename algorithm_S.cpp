@@ -51,3 +51,90 @@ void quickSort(std::vector<long>& vec, long left, long right)
 
 	}
 }
+
+void merge(std::vector<long> &vec, long left, long mid, long right)
+{
+	long left_len = mid - left + 1;
+	long right_len = right - mid;
+
+	std::vector<long> Lvec(left_len), Rvec(right_len);
+
+	for (long i = 0; i < left_len; i++)
+        Lvec[i] = vec[left + i];
+    for (long j = 0; j < right_len; j++)
+        Rvec[j] = vec[mid + 1 + j];
+	
+	long i = 0, j = 0;
+    long k = left;
+
+    while (i < left_len && j < right_len) {
+        if (Lvec[i] <= Rvec[j]) {
+            vec[k] = Lvec[i];
+            i++;
+        }
+        else {
+            vec[k] = Rvec[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < left_len) {
+        vec[k] = Lvec[i];
+        i++;
+        k++;
+    }
+
+    while (j < right_len) {
+        vec[k] = Rvec[j];
+        j++;
+        k++;
+    }
+}
+
+void merge_sort(std::vector<long> &vec, long left, long right)
+{
+	if (left < right) {
+		int mid = left + (right - left) / 2;
+    	merge_sort(vec, left, mid);
+    	merge_sort(vec, mid + 1, right);
+    	merge(vec, left, mid, right);
+	}
+}
+
+void insertionSort(std::vector<double> &vec)
+{
+	for (long i = 1; i < vec.size(); i++) {
+        double key = vec[i];
+        int j = i - 1;
+        while (j >= 0 && vec[j] > key) {
+            vec[j + 1] = vec[j];
+            j--;
+        }
+        vec[j + 1] = key;
+    }
+}
+
+void insertionSort(std::vector<long> &vec)
+{
+	for (long i = 1; i < vec.size(); i++) {
+        long key = vec[i];
+        long j = i - 1;
+        while (j >= 0 && vec[j] > key) {
+            vec[j + 1] = vec[j];
+            j--;
+        }
+        vec[j + 1] = key;
+    }
+}
+
+void bucket_sort(std::vector<double> &vec)
+{
+	size_t n = vec.size();
+	std::vector<std::vector<double>> dtemp(n);
+
+	for (double val : vec) dtemp[n * val].push_back(val);
+	for (std::vector i : dtemp) insertionSort(i);
+	long index = 0;
+	for (long i = 0; i < n; i++) for (long j = 0; j < dtemp[i].size(); j++) vec[index++] = dtemp[i][j];
+}

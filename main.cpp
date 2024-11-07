@@ -12,15 +12,22 @@ void printVector(std::vector<long> & vec)
 	}
 	std::cout << std::endl;
 }
+void printVector(std::vector<double> & vec)
+{
+	for (long i = 0; i < vec.size(); i++) {
+		std::cout << vec[i] << ' ';
+	}
+	std::cout << std::endl;
+}
 
 int main(void)
 {
     long n0 = 10e3; //10e3
-    long nMax = 10e7; //10e6
+    long nMax = 10e6; //10e6
     int nTest = 7;
 
 	for (long sizeVec = n0; sizeVec < nMax; sizeVec *= 2) {
-		std::vector<long> vec(sizeVec, 0);
+		std::vector<long> vec(sizeVec, 0); // long
 		std::random_device rd;
 		std::mt19937 gen(rd());
 
@@ -32,9 +39,9 @@ int main(void)
 		
 		for (int iTest = 0; iTest < nTest; iTest++) {
 			std::shuffle(vec.begin(), vec.end(), gen);
-
-			count_sort(vec, 0, sizeVec -1);
-
+			//printVector(vec);
+			insertionSort(vec);
+			//printVector(vec);
 		}
 
 		auto end = std::chrono::high_resolution_clock::now();
